@@ -1,14 +1,15 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "cars API",
+    "title": "Cars API",
     "description": "Cars API",
     "version": "1.0.0"
   },
   "host": "https://cse341-project2-0msn.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http", "https"
+    "http",
+    "https"
   ],
   "paths": {
     "/": {
@@ -21,7 +22,7 @@
         }
       }
     },
-    "/contacts/": {
+    "/project2/": {
       "get": {
         "description": "",
         "produces": [
@@ -42,19 +43,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": {
+                "brand": {
                   "example": "any"
                 },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "birthday": {
+                "type": {
                   "example": "any"
                 }
               }
@@ -71,7 +63,7 @@
         }
       }
     },
-    "/contacts/{id}": {
+    "/project2/{id}": {
       "get": {
         "description": "",
         "produces": [
@@ -106,19 +98,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": {
+                "brand": {
                   "example": "any"
                 },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "birthday": {
+                "type": {
                   "example": "any"
                 }
               }
