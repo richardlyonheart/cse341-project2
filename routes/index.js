@@ -5,6 +5,7 @@ router.get('/', (req, res) => {
 });
 
 router.use('/project2', require('./project2'));
+router.use('/houses', require('./houses'));
 
 router.use('/', require('./swagger'));
 

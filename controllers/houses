@@ -1,0 +1,70 @@
+const { response } = require('express');
+const mongodb = require('../data/database');
+const ObjectId = require("mongodb").ObjectId;
+
+const getAll = async (req, res) => {
+    const result = await mongodb.getDatabase().db('project2').collection('houses').find();
+    result.toArray().then((project2) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(project2);
+    });
+};
+
+const getSingle = async (req, res) => {
+    const HouseId = new ObjectId(req.params.id);
+    const result = await mongodb.getDatabase().db('project2').collection("houses").find({ _id: HouseId });
+    result.toArray().then((houses) => {
+      res.setHeader("Content-Type", "application/json");
+      res.status(200).json(houses[0]);
+    });
+  };
+
+const createHouse = async (req, res) => {
+  const house ={
+    type: req.body.type,
+    value: req.body.value,
+    name: req.body.name
+  };
+  const response = await mongodb.getDatabase().db("project2").collection("houses").insertOne({house});
+  if (response.acknowledged){
+    res.status(200).send();
+  } else {
+    res.status(500).json(response.error || "there has been an error creating House")
+  }
+};
+
+const updateHouse = async (req, res) => {
+  const HouseId = new ObjectId(req.params.id);
+  const house = {
+    type: req.body.type,
+    value: req.body.value,
+    name: req.body.name
+  };
+  const response = await mongodb.getDatabase().db("project2").collection("houses").replaceOne({ _id: HouseId}, house);
+
+  if (response.modifiedCount > 0) {
+    res.status(200).send();
+  } else { 
+    res.status(500).json(response.error || "there has been an error updating House")
+  }
+};
+
+const deleteHouse = async (req, res)=> {
+  const CarId = new ObjectId(req.params.id);
+  const response = await mongodb.getDatabase().db("project2").collection("houses").deleteOne({ _id: HouseId }, true);
+
+  if (response.deletedCount >0) {
+    res.status(200).send();
+  } else {
+    res.status(500).json(response.erros || "could not delete House")
+  }
+};
+
+
+module.exports = {
+    getAll,
+    getSingle,
+    createHouse,
+    updateHouse,
+    deleteHouse
+};
