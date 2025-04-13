@@ -75,11 +75,12 @@ app.get('/', (req, res) => {
 app.get('/github/callback',
     passport.authenticate('github', { failureRedirect: '/api-docs', session: true }),
     (req, res) => {
+        console.log('GitHub User:', req.user); // Verify GitHub user data
         req.session.user = {
             id: req.user.id,
             displayName: req.user.displayName || req.user.username || req.user.name
         };
-        console.log('Session after login:', req.session); // Debugging
+        console.log('Session after login:', req.session); // Check if `req.session.user` exists
         res.redirect('/');
     }
 );
