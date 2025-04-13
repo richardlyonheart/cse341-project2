@@ -6,7 +6,7 @@ const doc = {
         description: 'project2 API',
     },
     host: 'cse341-project2-0msn.onrender.com',
-    scheme: ['http', 'https'],
+    scheme: ['https'],
 };
 
 const outputFile = './swagger.json';
