@@ -13,7 +13,7 @@ const GitHubStrategy = require('passport-github').Strategy;
 const cors = require('cors');
 
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5500;
 
 app.use(express.json()); 
 app
@@ -74,7 +74,7 @@ app.get('/', (req, res) => {
   let message = req.query.message;
   let loginMessage = req.session.user !== undefined
       ? `You are now logged in as ${req.session.user.displayName}`
-      : "👋Hello! Welcome to our Task Management API. Please login to access the API.";
+      : "You are not logged in" ;
   res.send(`
       <div>
           ${loginMessage}
@@ -84,7 +84,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/github/callback', 
-  passport.authenticate('github', { failureRedirect: 'api-docs', session: false }), 
+  passport.authenticate('github', { failureRedirect: 'api-docs', session: true }), 
   (req, res) => {
       req.session.user = {
           id: req.user.id, 
