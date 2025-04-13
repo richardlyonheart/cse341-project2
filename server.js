@@ -11,10 +11,6 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5500;
 
-// Middleware for sessions
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
-
 app.use(session({
     secret: process.env.SESSION_SECRET || "secret",
     resave: false,
