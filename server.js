@@ -12,21 +12,24 @@ const app = express();
 const PORT = process.env.PORT || 5500;
 
 // Middleware for sessions
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
 app.use(session({
     secret: process.env.SESSION_SECRET || "secret",
     resave: false,
-    saveUninitialized: false, // Only save sessions when data exists
+    saveUninitialized: false, // Only save sessions when there’s data
     store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URL,
-        collectionName: 'sessions'
+        mongoUrl: process.env.MONGODB_URL, // MongoDB connection string
+        collectionName: 'sessions', // Name of the collection to store sessions
+        ttl: 14 * 24 * 60 * 60 // Session expiration in seconds (14 days)
     }),
     cookie: {
-        secure: process.env.NODE_ENV === 'production', // Set to true in production for HTTPS
+        secure: process.env.NODE_ENV === 'production', // Use HTTPS in production
         httpOnly: true, // Prevent client-side access
         maxAge: 14 * 24 * 60 * 60 * 1000 // 14 days
     }
 }));
-
 // CORS configuration
 app.use(cors({
     origin: '*', // Adjust as needed for specific domains
