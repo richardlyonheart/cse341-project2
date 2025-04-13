@@ -27,7 +27,7 @@ app
         collectionName: 'sessions'
     }),
     cookie: {
-        secure: true,
+        secure: false,
         maxAge: 14 * 24 * 60 * 60 * 1000
     }
   }))
@@ -84,7 +84,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/github/callback', 
-  passport.authenticate('github', { failureRedirect: 'api-docs', session: true }), 
+  passport.authenticate('github', { failureRedirect: 'api-docs', session: false }), 
   (req, res) => {
       req.session.user = {
           id: req.user.id, 
