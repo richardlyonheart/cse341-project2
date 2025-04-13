@@ -75,16 +75,28 @@ app.get('/', (req, res) => {
 app.get('/github/callback',
     passport.authenticate('github', { failureRedirect: '/api-docs', session: true }),
     (req, res) => {
-        console.log('GitHub User:', req.user); // Verify GitHub user data
+        if (!req.user) {
+            console.error('GitHub User is undefined!');
+            return res.status(500).json({ message: "Authentication failed, no user object" });
+        }
+
+        // Set user information in session
         req.session.user = {
             id: req.user.id,
             displayName: req.user.displayName || req.user.username || req.user.name
         };
-        console.log('Session after login:', req.session); // Check if `req.session.user` exists
-        res.redirect('/');
+
+        // Explicitly save the session
+        req.session.save((err) => {
+            if (err) {
+                console.error('Error saving session:', err);
+                return res.status(500).json({ message: "Failed to save session" });
+            }
+            console.log('Session after saving in /github/callback:', req.session);
+            res.redirect('/');
+        });
     }
 );
-
 // Debug route to test sessions
 app.get('/test-session', (req, res) => {
     console.log('Session:', req.session);
