@@ -62,14 +62,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/github/callback',
-    passport.authenticate('github', { failureRedirect: '/' }),
-    (req, res) => {
-        req.session.user = {
-            id: req.user.id,
-            displayName: req.user.displayName || req.user.username
-        };
-        res.redirect('/');
-    });
+  passport.authenticate('github', { failureRedirect: '/?message=Login+Failed' }),
+  (req, res) => {
+      if (!req.user) {
+          return res.redirect('/?message=Login+Failed');
+      }
+      req.session.user = {
+          id: req.user.id,
+          displayName: req.user.displayName || req.user.username || req.user.name
+      };
+      res.redirect('/');
+      console.log('Authenticated User:', req.user);
+  }
+);
 
     // Start the server only after DB is initialized
     app.listen(PORT, () => {
