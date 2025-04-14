@@ -1,14 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const mongodb = require('./data/database');
-const e = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const { body } = require('express-validator');
-const bodyParser = require('body-parser');
 const GitHubStrategy = require('passport-github').Strategy;
 const cors = require('cors');
 
