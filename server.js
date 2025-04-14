@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo');
 const { body } = require('express-validator');
 const GitHubStrategy = require('passport-github').Strategy;
 const cors = require('cors');
+require('/auth');
 
 
 const PORT = process.env.PORT || 8000;
@@ -17,7 +18,7 @@ app.use(express.json());
 app
   .use(bodyParser.json())
   .use(session({
-    secret: process.env.SESSION_SECRET || "secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
@@ -60,11 +61,11 @@ passport.use(new GitHubStrategy({
 }));
 
 // Serialize user and Deserialize user
-passport.serializeUser((user, done) => {
+passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
-passport.deserializeUser((user, done) => {
+passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
@@ -82,7 +83,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/github/callback', 
-  passport.authenticate('github', { failureRedirect: 'api-docs', session: false }), 
+  passport.authenticate('github', { 
+    failureRedirect: 'api-docs', session: false }), 
   (req, res) => {
       req.session.user = {
           id: req.user.id, 
