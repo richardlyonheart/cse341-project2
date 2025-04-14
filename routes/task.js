@@ -3,7 +3,7 @@ const router = express.Router();
 const tasksController = require('../controllers/tasks');
 const { validateTask } = require('../middlewares/validation');
 
-const { isAuthenticated } = require('../middlewares/auth');
+const { isAuthenticated } = require('../middleware/auth');
 
 // Define routes for tasks
 router.get('/', isAuthenticated, tasksController.getTasks);

@@ -9,7 +9,7 @@ const MongoStore = require('connect-mongo');
 const { body } = require('express-validator');
 const GitHubStrategy = require('passport-github').Strategy;
 const cors = require('cors');
-require('/auth');
+
 
 
 const PORT = process.env.PORT || 8000;
