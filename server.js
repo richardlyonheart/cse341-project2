@@ -39,7 +39,6 @@ mongodb.initDb((err) => {
 
     app.use(passport.initialize());
     app.use(passport.session());
-    app.listen(PORT, () => console.log(`🚀 Server is running on Port ${PORT}`));
 });
 
 // OAuth Logic
