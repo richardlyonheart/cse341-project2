@@ -90,10 +90,17 @@ app.get('/github/callback',
           id: req.user.id, 
           displayName: req.user.displayName || req.user.username || req.user.name
       };
-      res.redirect('/');
+      console.log('Session after login:', req.session);
+
+      req.session.save(err => {
+          if (err) {
+              console.error('Session save error:', err);
+              return res.status(500).send('Failed to save session');
+          }
+          res.redirect('/'); // Redirect only after session is saved
+      });
   }
 );
-
 mongodb.initDb((err) => {
   if (err) {
       console.error("❌ Failed to connect to database:", err);
