@@ -3,7 +3,7 @@ const express = require('express');
 const mongodb = require('./data/database');
 const e = require('express');
 const app = express();
-const BodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -74,7 +74,7 @@ app.get('/', (req, res) => {
   let message = req.query.message;
   let loginMessage = req.session.user !== undefined
       ? `You are now logged in as ${req.session.user.displayName}`
-      : "👋Hello! Welcome to our Task Management API. Please login to access the API.";
+      : "Please login to access the API.";
   res.send(`
       <div>
           ${loginMessage}
