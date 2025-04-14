@@ -11,6 +11,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5500;
 
+// Session configuration
 app.use(session({
     secret: process.env.SESSION_SECRET || "secret",
     resave: false,
@@ -26,6 +27,7 @@ app.use(session({
         maxAge: 14 * 24 * 60 * 60 * 1000 // 14 days
     }
 }));
+
 // CORS configuration
 app.use(cors({
     origin: '*', // Adjust as needed for specific domains
@@ -60,7 +62,7 @@ passport.deserializeUser((user, done) => {
 
 // Home route
 app.get('/', (req, res) => {
-    let loginMessage = req.session.user
+    const loginMessage = req.session.user
         ? `You are now logged in as ${req.session.user.displayName}`
         : "You are not logged in";
     res.send(`
@@ -96,10 +98,11 @@ app.get('/github/callback',
         });
     }
 );
+
 // Debug route to test sessions
 app.get('/test-session', (req, res) => {
-    console.log('Session:', req.session);
-    res.json(req.session);
+    console.log('Session:', req.session); // Logs the session data to the console
+    res.json(req.session); // Sends session data to the client
 });
 
 // Routes
