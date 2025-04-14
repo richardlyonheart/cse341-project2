@@ -29,19 +29,21 @@ mongodb.initDb((err, db) => {
 
     // Set up sessions with MongoDB as the session store
     app.use(session({
-        secret: process.env.SESSION_SECRET || 'secret',
-        resave: false,
-        saveUninitialized: false, // Prevent storing empty sessions
-        store: MongoStore.create({
-            mongoUrl: process.env.MONGODB_URL,
-            collectionName: 'sessions',
-            mongoOptions: { useUnifiedTopology: true }
-        }),
-        cookie: {
-            secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-            maxAge: 14 * 24 * 60 * 60 * 1000 // 14 days
-        }
-    }));
+      secret: process.env.SESSION_SECRET || 'secret',
+      resave: false,
+      saveUninitialized: false, // Prevent storing empty sessions
+      store: MongoStore.create({
+          mongoUrl: process.env.MONGODB_URL,
+          dbName: 'project2', // Specify your database name here
+          collectionName: 'sessions',
+          mongoOptions: { useUnifiedTopology: true },
+          touchAfter: 24 * 3600 // Reduce frequency of session updates
+      }),
+      cookie: {
+          secure: process.env.NODE_ENV === 'production', // Enable secure cookies in production
+          maxAge: 14 * 24 * 60 * 60 * 1000 // 14 days
+      }
+  }));
 
     app.use(passport.initialize());
     app.use(passport.session());
