@@ -36,7 +36,6 @@ mongodb.initDb((err, db) => {
           mongoUrl: process.env.MONGODB_URL,
           dbName: 'project2', // Specify your database name here
           collectionName: 'sessions',
-          mongoOptions: { useUnifiedTopology: true },
           touchAfter: 24 * 3600 // Reduce frequency of session updates
       }),
       cookie: {
