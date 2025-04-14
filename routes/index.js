@@ -1,8 +1,8 @@
-const router = require('express').Router();
+
 const passport = require('passport');
 const { isAuthenticated } = require('../middleware/auth');
 
-
+const router = require('express').Router();
 router.use('/', require('./swagger'));
 router.use('/houses', isAuthenticated, require('./houses'));
 router.use('/project2', isAuthenticated, require('./project2'));
