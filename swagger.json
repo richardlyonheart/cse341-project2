@@ -11,6 +11,22 @@
     "https"
   ],
   "paths": {
+    "/login": {
+      "get": {
+        "description": "GitHub login",
+        "responses": {
+          "default": { "description": "" }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "description": "Logout from the application",
+        "responses": {
+          "default": { "description": "" }
+        }
+      }
+    },
     "/": {
       "get": {
         "description": "",

@@ -74,7 +74,7 @@ app.get('/', (req, res) => {
   let message = req.query.message;
   let loginMessage = req.session.user !== undefined
       ? `You are now logged in as ${req.session.user.displayName}`
-      : "👋Hello! Welcome to our Task Management API. Please login to access the API.";
+      : "please log in";
   res.send(`
       <div>
           ${loginMessage}
