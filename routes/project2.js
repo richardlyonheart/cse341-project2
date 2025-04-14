@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {isAuthenticated} = require('../middleware/auth');
 
 const project2Controller= require('../controllers/project2');
+const {isAuthenticated} = require('../middleware/auth');
 
 router.get('/', isAuthenticated, project2Controller.getAll);
 

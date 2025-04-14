@@ -11,6 +11,14 @@
     "https"
   ],
   "paths": {
+    "/github/callback": {
+      "get": {
+        "description": "GitHub OAuth callback",
+        "responses": {
+          "default": { "description": "" }
+        }
+      }
+    },
     "/login": {
       "get": {
         "description": "GitHub login",

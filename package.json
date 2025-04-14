@@ -24,7 +24,8 @@
     "express-openid-connect": "^2.18.0",
     "mongodb": "^6.15.0",
     "parser": "^0.1.4",
-    "swagger": "^0.0.1"
+    "swagger": "^0.0.1",
+    "swagger-ui": "^5.21.0"
   },
   "devDependencies": {
     "bcrypt": "^5.1.1",
