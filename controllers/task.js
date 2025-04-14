@@ -1,6 +1,6 @@
 // These files are subject to change as assigned to task owner
 const router = require('express').Router();
-const mongodb = require('../config/database');
+const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
 // Get all tasks
