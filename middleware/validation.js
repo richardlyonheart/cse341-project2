@@ -1,7 +1,7 @@
 const { body, validationResult } = require('express-validator');
 
-// Validation rules for creating/updating category
-const validateCategory = [
+// Validation rules for creating/updating car
+const validateCar = [
     body('name').notEmpty().withMessage('name is required'),
     body('description').notEmpty().withMessage('description is required'),
     (req, res, next) => {
@@ -55,4 +55,4 @@ const validateComment = [
     }
 ];
 
-module.exports = { validateCategory, validateTask, validateUser, validateComment };
+module.exports = { validateCar, validateTask, validateUser, validateComment };
