@@ -2,8 +2,8 @@ const { body, validationResult } = require('express-validator');
 
 // Validation rules for creating/updating car
 const validateCar = [
-    body('name').notEmpty().withMessage('name is required'),
-    body('description').notEmpty().withMessage('description is required'),
+    body('brand').notEmpty().withMessage('brand is required'),
+    body('type').notEmpty().withMessage('type is required'),
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
