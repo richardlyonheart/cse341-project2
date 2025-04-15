@@ -4,14 +4,14 @@ const {isAuthenticated} = require('../middleware/auth');
 
 const housesController= require('../controllers/houses');
 
-router.get('/', housesController.getAll);
+router.get('/', isAuthenticated, housesController.getAll);
 
-router.get('/:id', housesController.getSingle);
+router.get('/:id', isAuthenticated, housesController.getSingle);
 
-router.post('/', housesController.createHouse);
+router.post('/', isAuthenticated, housesController.createHouse);
 
-router.put('/:id', housesController.updateHouse);
+router.put('/:id', isAuthenticated, housesController.updateHouse);
 
-router.delete('/:id', housesController.deleteHouse);
+router.delete('/:id', isAuthenticated, housesController.deleteHouse);
 
 module.exports = router;

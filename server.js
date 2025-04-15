@@ -1,15 +1,15 @@
 require('dotenv').config();
 const express = require('express');
 const mongodb = require('./data/database');
+const e = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const { body } = require('express-validator');
+const bodyParser = require('body-parser');
 const GitHubStrategy = require('passport-github').Strategy;
 const cors = require('cors');
-
 
 
 const PORT = process.env.PORT || 8000;
@@ -18,7 +18,7 @@ app.use(express.json());
 app
   .use(bodyParser.json())
   .use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "secret",
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
@@ -61,11 +61,11 @@ passport.use(new GitHubStrategy({
 }));
 
 // Serialize user and Deserialize user
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
@@ -73,7 +73,7 @@ app.get('/', (req, res) => {
   let message = req.query.message;
   let loginMessage = req.session.user !== undefined
       ? `You are now logged in as ${req.session.user.displayName}`
-      : "Please login to access the API.";
+      : "👋Hello! Welcome to our Task Management API. Please login to access the API.";
   res.send(`
       <div>
           ${loginMessage}
@@ -83,24 +83,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/github/callback', 
-  passport.authenticate('github', { 
-    failureRedirect: 'api-docs', session: false }), 
+  passport.authenticate('github', { failureRedirect: 'api-docs', session: false }), 
   (req, res) => {
       req.session.user = {
           id: req.user.id, 
           displayName: req.user.displayName || req.user.username || req.user.name
       };
-      console.log('Session after login:', req.session);
-
-      req.session.save(err => {
-          if (err) {
-              console.error('Session save error:', err);
-              return res.status(500).send('Failed to save session');
-          }
-          res.redirect('/'); // Redirect only after session is saved
-      });
+      res.redirect('/');
   }
 );
+
 mongodb.initDb((err) => {
   if (err) {
       console.error("❌ Failed to connect to database:", err);

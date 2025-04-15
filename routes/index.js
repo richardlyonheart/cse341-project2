@@ -1,12 +1,15 @@
-
+const router = require('express').Router();
 const passport = require('passport');
 const { isAuthenticated } = require('../middleware/auth');
 
-const router = require('express').Router();
-router.use('/', require('./swagger'));
-router.use('/houses', require('./houses'));
+router.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
 router.use('/project2', require('./project2'));
-router.use('/task', require('./task') )
+router.use('/houses', require('./houses'));
+
+router.use('/', require('./swagger'));
 router.get('/login', passport.authenticate('github'), (req, res) => { });
 
 router.get('/logout', (req, res, next) => {
