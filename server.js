@@ -34,7 +34,12 @@ app
   .use(passport.initialize())
   
   .use(passport.session())
-  
+
+  .use((req, res, next) => {
+    console.log('Session:', req.session);
+    console.log('User:', req.user);
+    next();
+})
   .use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
@@ -48,7 +53,7 @@ app
     next();
   })
   .use(cors({methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']}))
-  .use(cors({origin: '*'}))
+  .use(cors({origin: 'https://cse341-project2-0msn.onrender.com/api-docs'}))
   .use('/', require('./routes/index'));
 
 // Passport GitHub Strategy
@@ -83,7 +88,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/github/callback', 
-  passport.authenticate('github', { failureRedirect: 'api-docs', session: false }), 
+  passport.authenticate('github', { failureRedirect: 'api-docs' }), 
   (req, res) => {
       req.session.user = {
           id: req.user.id, 
